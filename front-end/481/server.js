@@ -8,7 +8,7 @@ let CLIENT = null;
 const wait = (data, delay = 100) => setTimeout(() => CLIENT.send(JSON.stringify(data)), delay);
 
 const sendAsyncMessages = () => {
-    serverSubset.data.map((el, i) => wait(el, i+100))
+    serverSubset.data.map((el, i) => wait(el, i + 1000))
 }
 
 const webSocketServer = new WebSocketServer.Server({
@@ -16,7 +16,7 @@ const webSocketServer = new WebSocketServer.Server({
 });
 
 let isRefreshServer = true;
-webSocketServer.on('connection', function(ws) {
+webSocketServer.on('connection', function (ws) {
     CLIENT = ws;
     console.log("connect");
 
@@ -25,7 +25,7 @@ webSocketServer.on('connection', function(ws) {
         isRefreshServer = false
     }
 
-    ws.on('close', function() {
+    ws.on('close', function () {
         console.log('disconnect');
         CLIENT = null
         isRefreshServer = false
